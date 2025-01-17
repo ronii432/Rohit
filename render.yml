@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: SoulScriptService
+    env: python
+    plan: free
+    buildCommand: |
+      # Update system and install dependencies
+      apt-get update
+      apt-get install -y g++
+      apt-get install -y python3-pip
+
+      # Install Python dependencies
+      pip3 install telebot pymongo aiohttp
+
+      # Compile the C++ code
+      g++ -std=c++14 soul.cpp -o soul -pthread
+    startCommand: |
+      # Run the Python script
+      python3 soul.py
